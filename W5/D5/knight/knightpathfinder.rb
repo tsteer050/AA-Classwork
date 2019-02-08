@@ -35,7 +35,7 @@ class KnightPathFinder
 
     def build_move_tree
         # debugger
-        queue = [@root_node]
+        queue = [self.root_node]
         until queue.empty?
             node = queue.first
             moves = new_move_positions(node.value)
@@ -47,4 +47,41 @@ class KnightPathFinder
         end
     end
 
+    def find_path(end_position)
+        end_node = self.root_node.bfs(end_position)
+        trace_path_back(end_node)
+    end
+
+    def trace_path_back(node)
+        return [node.value] if node.parent == nil
+        path = trace_path_back(node.parent)
+        path << node.value
+    end
+
+ 
 end
+
+class Game
+
+    def initialize
+
+    end
+
+     def play
+        puts "Please enter a starting position"
+        start_pos = gets.chomp.split(",").map(&:to_i)
+
+        finder = KnightPathFinder.new(start_pos)
+        puts "Please enter an ending position"
+        end_pos = gets.chomp.split(",").map(&:to_i)
+
+        finder.build_move_tree
+        p finder.find_path(end_pos)
+    end
+
+
+end
+
+game = Game.new
+game.play
+
