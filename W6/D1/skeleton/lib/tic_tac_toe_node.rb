@@ -12,30 +12,42 @@ class TicTacToeNode
   end
 
 
+
   def losing_node?(evaluator)
     # debugger
     if board.won? && board.winner == evaluator 
       return false
     elsif board.won? && board.winner != evaluator
       return true   
-    elsif board.over? 
+    elsif board.over? && board.won? == false
       return false  
-    else
+    end
+    if next_mover_mark == evaluator
+      children.all? { |e| e.losing_node?(evaluator) } 
+    else 
       children.any? { |e| e.losing_node?(evaluator) }
     end
   end
+
+
+# X | _ | _
+# O | O | _
+# _ | _ | _
 
   def winning_node?(evaluator)
     if board.won? && board.winner == evaluator 
       return true
     elsif board.won? && board.winner != evaluator
       return false  
-    elsif board.over? 
-      return true  
-    else
-      children.none? { |e| e.losing_node?(evaluator) }
+    elsif board.over? && board.won? == false
+      return false
     end
-  
+    if
+      children.any? { |e| e.winning_node?(evaluator) }
+    else
+      children.all? { |e| e.winning_node?(evaluator) }
+    end
+    
   end
 
   # This method generates an array of all moves that can be made after
@@ -54,7 +66,7 @@ class TicTacToeNode
     positions.each do |pos|
         new_board = board.dup
         next if new_board[pos] != nil
-        new_board[pos] = new_next_mark 
+        new_board[pos] = self.next_mover_mark 
         children << TicTacToeNode.new(new_board, new_next_mark, pos) 
     end
     children
@@ -63,3 +75,5 @@ class TicTacToeNode
 
 
 end
+
+

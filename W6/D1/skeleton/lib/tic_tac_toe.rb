@@ -1,4 +1,5 @@
 # DON'T EDIT ME!
+require_relative 'super_computer_player'
 
 class Board
   attr_reader :rows
@@ -208,7 +209,7 @@ end
 if __FILE__ == $PROGRAM_NAME
   puts "Play the dumb computer!"
   hp = HumanPlayer.new("Ned")
-  cp = ComputerPlayer.new
+  cp = SuperComputerPlayer.new
 
   TicTacToe.new(hp, cp).run
 end
