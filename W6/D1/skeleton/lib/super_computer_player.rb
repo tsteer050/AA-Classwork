@@ -1,9 +1,12 @@
 require_relative 'tic_tac_toe_node'
 require 'byebug'
 
+
 class SuperComputerPlayer < ComputerPlayer
   def move(game, mark)
-    
+    game.show
+    puts self.name + " is thinking..."
+    sleep(1)
     new_board = game.board.dup
     new_node = TicTacToeNode.new(new_board, mark)
     new_node.children.each do |child|

@@ -1,5 +1,7 @@
 # DON'T EDIT ME!
 require_relative 'super_computer_player'
+require 'colorize'
+require 'colorized_string'
 
 class Board
   attr_reader :rows
@@ -114,7 +116,21 @@ class TicTacToe
 
   def show
     # not very pretty printing!
-    self.board.rows.each { |row| p row }
+    # self.board.rows.each { |row| p row }
+    self.board.rows.each do |row|
+      string = "|".colorize(:black)
+      row.each_index do |idx|
+        if row[idx] == :o 
+          string << "O".colorize(:blue).underline + "|".colorize(:black) 
+        elsif row[idx] == :x
+          string << "X".colorize(:red).underline + "|".colorize(:black)
+        else
+          string << "_".colorize(:black) + "|".colorize(:black)
+        end
+        
+      end
+      puts string.colorize(:background => :white)
+    end
   end
 
   private
@@ -167,13 +183,16 @@ class HumanPlayer
 end
 
 class ComputerPlayer
-  attr_reader :name
+  attr_accessor :name
 
   def initialize
-    @name = "Tandy 400"
+    @name = "A robot"
   end
 
   def move(game, mark)
+    game.show
+    puts self.name + " is thinking..."
+    sleep(1)
     winner_move(game, mark) || random_move(game)
   end
 
@@ -206,10 +225,49 @@ class ComputerPlayer
   end
 end
 
-if __FILE__ == $PROGRAM_NAME
-  puts "Play the dumb computer!"
-  hp = HumanPlayer.new("Ned")
-  cp = SuperComputerPlayer.new
+class Selector
+  
+  def initialize
+  end
 
-  TicTacToe.new(hp, cp).run
+  def self.player_select
+    input = gets.chomp
+    if input.upcase == "CP"
+      return ComputerPlayer.new
+    elsif input.upcase == "SCP"
+      return SuperComputerPlayer.new
+    else
+      return HumanPlayer.new(input)
+    end
+  end
+
+  def self.name_cpu(cpu)
+    input = gets.chomp
+    cpu.name = input
+    return cpu
+  end
+
 end
+
+
+if __FILE__ == $PROGRAM_NAME
+  # selector = Selector.new
+  puts "Enter the name for player1, or type 'CP' for computer player or 'SCP' for super computer player: "
+  p1 = Selector.player_select
+  unless p1.is_a?(HumanPlayer)
+    puts "Enter the name for cpu1: "
+    p1 = Selector.name_cpu(p1)
+  end
+
+
+  puts "Enter the name for player2, or type 'CP' for computer player or 'SCP' for super computer player: "
+  p2 = Selector.player_select
+    unless p2.is_a?(HumanPlayer)
+    puts "Enter the name for cpu1: "
+    p2 = Selector.name_cpu(p2)
+  end
+
+
+  TicTacToe.new(p1, p2).run
+end
+
