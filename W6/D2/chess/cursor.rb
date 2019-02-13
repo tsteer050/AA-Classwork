@@ -41,7 +41,7 @@ class Cursor
 
   def get_input
     key = KEYMAP[read_char]
-    handle_key(key)
+    handle_key(key) #should be using key as arguement
   end
 
   private
@@ -76,22 +76,34 @@ class Cursor
   end
 
   def handle_key(key)
-    case key 
-    when :return || :space 
-      return @cursor_pos
-    when :left || :right || :up || :down
+    case key
+    when :left, :right, :up, :down
       update_pos(MOVES[key])
       return nil 
+    when :return, :space 
+      return @cursor_pos
     when :ctrl_c
       Process.exit(0)
     end
   end
 
   def update_pos(diff)
-    if Board.valid_pos?(diff)
-      @cursor_pos = diff 
+    x, y = diff 
+    a, b = @cursor_pos
+    new_pos = [x + a, y + b]
+    if Board.valid_pos?(new_pos)
+      @cursor_pos = new_pos
     end
   end
 
  
 end
+
+
+
+# MOVES = {
+#   left: [0, -1],
+#   right: [0, 1],
+#   up: [-1, 0],
+#   down: [1, 0]
+# }

@@ -15,6 +15,10 @@ class Board
         grid
   end
 
+    def self.valid_pos?(pos)
+        pos.all? {|num| (0..7).include?(num)}
+    end
+
     attr_reader :board
 
     def initialize
@@ -40,9 +44,7 @@ class Board
       @board[row][col] = value
     end
 
-    def valid_pos?(pos)
-        pos.all? {|num| (0..7).include?(num)}
-    end
+    
 
 end
 

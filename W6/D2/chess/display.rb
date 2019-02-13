@@ -1,6 +1,8 @@
 require_relative 'cursor'
 require 'colorize'
+require_relative 'board'
 #require 'colorized_string'
+require 'byebug'
 
 
 class Display
@@ -23,48 +25,34 @@ class Display
           else
             square_render += square.type.to_s
           end
-         
+
           if [i,j] == @cursor_pos.cursor_pos
-            square_render.colorize(:background => :blue)
+            print square_render.colorize(:background => :blue)
+          else 
+            print square_render
           end
 
-           print square_render
+           
            print "|"
           
         end
         puts 
       end
-      p "hello there".blue
+
       return nil
     end
 
-    # def render
-    #   @board.board.each.with_index do |row, i|
-    #     display_row = "|"
-
-    #     row.each.with_index do |square, j|
-    #       square_render = ""
-
-    #       if square.nil?
-    #         square_render += "_"
-    #       else
-    #         square_render += square.type.to_s
-    #       end
-         
-    #       if [i,j] == @cursor_pos.cursor_pos
-    #         square_render.colorize(:background => :blue)
-    #       end
-
-    #        display_row += square_render
-    #        display_row += "|"
-          
-    #     end
-    #     p display_row
+    # def play_test
+    #   loop do
+    #     system("clear")
+    #     render 
+    #     @cursor_pos.get_input
+    #     p @cursor_pos.cursor_pos
     #   end
-    #   return nil
     # end
-
-
 
 end
 
+b = Board.new 
+d = Display.new(b, [0,0])
+d.play_test
