@@ -1,4 +1,4 @@
-require_relative "piece"
+require_relative 'pieces/piece.rb'
 
 class Board
     
@@ -8,7 +8,7 @@ class Board
         grid.each_index do |i| 
           grid.each_index do |j|
             if i <= 1 || i >= 6 
-              grid[i][j] = Piece.new
+              grid[i][j] = Piece.new(:white, [i,j], self)
             end
           end
         end
@@ -27,11 +27,15 @@ class Board
     end
 
     def move_piece(start_pos, end_pos)
+        raise "Start and end position must be different" if start_pos == end_pos
         start_piece = self[start_pos]
         end_piece = self[end_pos]
         raise "Invalid start position" if start_piece.nil?
         raise "Invalid end position" unless end_piece.nil?
-        self[start_pos], self[end_pos] = self[end_pos], self[start_pos]
+        if start_piece.moves.include?(end_pos)
+          self[start_pos], self[end_pos] = self[end_pos], self[start_pos]
+          self[end_pos].pos = end_pos
+        end
     end
 
     def [](pos)
@@ -47,6 +51,9 @@ class Board
     
 
 end
+
+
+
 
 # b = Board.new 
 # b.move_piece([5,0],[4,0])
