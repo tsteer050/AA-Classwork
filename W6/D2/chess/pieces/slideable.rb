@@ -23,12 +23,16 @@ module Slideable
         a,b = dir 
        moves += grow_unblocked_moves(a,b)
     end
-    p moves
+
     moves
    
   end
 
+
+  private 
+  
   def grow_unblocked_moves(dx, dy)#[-1, 0]
+    # debugger
     moves = []
     x, y = @pos
     blocked = false 
@@ -38,18 +42,17 @@ module Slideable
         blocked = true
       else
         new_pos = [x, y]
-        case @board[new_pos]
-          when nil 
+        if @board[new_pos] == NullPiece.instance   
+          moves << [x, y]
+        else 
+          color = @board[new_pos].color
+          if color == @color
+            blocked = true
+          else
             moves << [x, y]
-          when !nil 
-            color = @board[new_pos].color
-            if color == @color
-              blocked = true
-            else
-               moves << [x, y]
-               blocked = true
-            end
+            blocked = true
           end
+        end
       end
       
     end

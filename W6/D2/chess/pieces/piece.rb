@@ -1,8 +1,8 @@
 class Piece
 
-  attr_reader :color 
+  attr_reader :color, :pos
   
-  def initialize(color, pos, board)
+  def initialize(color=:none, pos, board)
     @color = color
     @pos = pos
     @board = board
@@ -26,12 +26,16 @@ class Piece
 
   def valid_moves 
     #return an array of possible moves
-
+     self.moves.select {|move| move_into_check?(move) == false}
   end
 
   private
 
   def move_into_check?(end_pos)
+    board = @board.dup
+  
+    board.move_piece!(@pos, end_pos)
+    board.in_check?(@color)
 
   end
 

@@ -11,7 +11,7 @@ module Stepable
             new_pos = [x, y]
             
             if Board.valid_pos?(new_pos)
-                if @board[new_pos] == nil
+                if @board[new_pos] == NullPiece.instance
                     moves << new_pos
                 elsif @board[new_pos].color != @color
                     moves << new_pos

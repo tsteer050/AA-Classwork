@@ -20,25 +20,33 @@ class Display
 
     def render
       @board.board.each.with_index do |row, i|
-        print "|"
+        print "|".colorize(:background => :blue)
 
         row.each.with_index do |square, j|
-          square_render = ""
+          square_render = square.to_s
+            if square.color == :black
+                if [i,j] == @cursor_pos.cursor_pos
+                  print square_render.colorize(:color => :black, :background => :red)
+                else 
+                  print square_render.colorize(:color => :black, :background => :blue)
+                end
+            else 
+                if [i,j] == @cursor_pos.cursor_pos
+                  print square_render.colorize(:background => :red)
+              else 
+                  print square_render.colorize(:background => :blue)
+              end
+            end
+          
 
-          if square.nil?
-            square_render += "_"
-          else
-            square_render += square.to_s
-          end
-
-          if [i,j] == @cursor_pos.cursor_pos
-            print square_render.colorize(:background => :blue)
-          else 
-            print square_render
-          end
+          # if [i,j] == @cursor_pos.cursor_pos
+          #   print square_render.colorize(:background => :blue)
+          # else 
+          #   print square_render.colorize(:background => :red)
+          # end
 
            
-           print "|"
+           print "|".colorize(:background => :blue)
           
         end
         puts 
@@ -51,7 +59,7 @@ class Display
       selected_positions = []
       loop do
         system("clear")
-        render 
+        render
         input = @cursor_pos.get_input
         if !input.nil?
           selected_positions << input
@@ -60,21 +68,23 @@ class Display
           begin
           @board.move_piece(selected_positions[0], selected_positions[1])
           selected_positions = []
-          rescue
-            puts "Not a valid move"
+          rescue CheckError => e 
+            puts e.message
+            # puts "Not a valid move"
             sleep(1)
             selected_positions = []
           end
         end
       end
+      
     end
 
 end
 
-
+class CheckError < ArgumentError
+end
 b = Board.new 
 d = Display.new(b, [0,0])
-b.[]=([4,4], Knight.new(:black, [4,4], b))
 d.play_test
 
 
