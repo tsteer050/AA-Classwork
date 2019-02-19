@@ -84,6 +84,6 @@ class HashMap
   end
 
   def bucket(key)
-    i = key.hash % num_buckets
+    key.hash % num_buckets
   end
 end
