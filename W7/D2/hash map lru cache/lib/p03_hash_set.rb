@@ -11,19 +11,19 @@ class HashSet
 
   def insert(key)
     unless include?(key)
-      self[key] << key.hash 
+      self[key] << key
       @count += 1
       resize! if count > num_buckets
     end
   end
 
   def include?(key)
-    self[key].include?(key.hash)
+    self[key].include?(key)
   end
 
   def remove(key)   
     if include?(key)
-      self[key].delete(key.hash)
+      self[key].delete(key)
       @count -= 1
     end
   end
