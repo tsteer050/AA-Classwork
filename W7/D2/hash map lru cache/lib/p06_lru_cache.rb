@@ -1,10 +1,12 @@
 require_relative 'p05_hash_map'
 require_relative 'p04_linked_list'
+require 'byebug'
 
 class LRUCache
+  attr_reader :prc
   def initialize(max, prc=Proc.new { |x| x ** 2 })
-    @map = HashMap.new
-    @store = LinkedList.new
+    @map = HashMap.new  #this is the map.  it helps you find an answer in the cache
+    @store = LinkedList.new  #this is the cache.  this takes time to look through
     @max = max
     @prc = prc
   end
@@ -13,17 +15,16 @@ class LRUCache
     @map.count
   end
 
-  [key, node]
-
   def get(key)
+    # debugger
     if @map.include?(key)
       node = @map[key]
       update_node!(node)
+      return node.val
     else
-            #add to map and cache
-      
-
-      
+      #add to map and cache
+      calc!(key)
+  
     end
   end
 
@@ -34,15 +35,27 @@ class LRUCache
   private
 
   def calc!(key)
-    @prc.call(key)
+    # debugger
+    val = prc.call(key)
+    last = @store.append(key, val)
+    @map.set(key, last)
+    if count > @max
+      eject!
+    end
+    return val
   end
 
   def update_node!(node)
-    @store.remove(node.key)
-    @store.append(node.key, node.val)
+    # @store.remove(node.key)
+    node.remove
+    updated = @store.append(node.key, node.val)
+    @map[updated.key] = updated
   end
 
   def eject!
+    removal_key = @store.first.key
+    @map.delete(removal_key)
+    @store.first.remove
   end
 end
 

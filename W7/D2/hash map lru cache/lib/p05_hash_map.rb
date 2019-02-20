@@ -32,6 +32,7 @@ class HashMap
   end
 
   def get(key)
+    # debugger
     @store[bucket(key)].get(key)
   end
 

@@ -1,5 +1,6 @@
 require 'rspec'
 require 'p06_lru_cache'
+require 'byebug'
 
 describe LRUCache do
   describe "#get" do
@@ -79,6 +80,7 @@ describe LRUCache do
       lru.get(2)
       list = lru.instance_variable_get(:@store)
       map = lru.instance_variable_get(:@map)
+      # debugger
       expect(list.last).to be(map[2])
     end
   end
