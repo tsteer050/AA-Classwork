@@ -56,7 +56,7 @@ def example_index_problem
   SQL
 end
 
-example_index_problem
+# example_index_problem
 
 def toy_time
   # This query will find the price of the most expensive toy named 'Kiss'.
@@ -66,6 +66,9 @@ def toy_time
   
   # REMINDER: Only one index is needed per problem! 
   # Get cost within the range of: 32..40
+
+
+  # CREATE INDEX toys_name on toys(name);
   execute(<<-SQL)
     EXPLAIN
       SELECT
@@ -80,6 +83,7 @@ def toy_time
   SQL
 end
 
+# CREATE INDEX cat_colors on cats(color);
 def gold_cat_toys
   # Find the `toys` name for each `cat` that is 'Gold'.
   
@@ -99,6 +103,8 @@ def gold_cat_toys
   SQL
 end
 
+# gold_cat_toys
+
 def who_owns_thumbs_up
   # This query lists the name of the 'Pink' colored cat who 
   # owns the toy named 'Thumbsup'.
@@ -106,6 +112,8 @@ def who_owns_thumbs_up
   # What kind of scan would be more efficent and what index could you create that would help?
 
   # Get cost within the range of: 4..150
+
+  # CREATE INDEX cat_toys ON cattoys(toy_id);
   execute(<<-SQL)
     EXPLAIN
       SELECT
@@ -126,6 +134,8 @@ def popular_toys
   # Add the index that will make this query much more efficient!
 
   # Get cost within the range of: 30..40
+
+  #CREATE INDEX cat_ids ON cattoys(cat_id);
   execute(<<-SQL)
     EXPLAIN
       SELECT

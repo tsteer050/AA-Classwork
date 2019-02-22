@@ -52,6 +52,21 @@ def cats_and_toys_alike
   # Order alphabetically by cat name
   # Get your overall cost lower than: 590
   execute(<<-SQL)
+  EXPLAIN
+  SELECT 
+    cats.name
+  FROM
+    cats
+  JOIN cattoys 
+    ON cats.id = cattoys.cat_id
+  JOIN toys
+    ON cattoys.toy_id = toys.id
+  WHERE 
+    cats.color = 'Blue' AND
+    toys.color = 'Blue'
+  ORDER BY
+    cats.name ASC
+    
 
   SQL
 end
