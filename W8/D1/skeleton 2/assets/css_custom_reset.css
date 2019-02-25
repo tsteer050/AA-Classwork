@@ -9,6 +9,19 @@ html, body, div, span, h1, h2, h3, h4, a, ol, ul, li, form, label, article, asid
 
 body {
   line-height: 1.5;
+  width: 900px;
+  margin: 0 auto;
+}
+
+section {
+  width: 700px;
+  display: inline-block;
+}
+
+aside {
+  width: 180px;
+  display: inline-block;
+  margin-right: 15px;
 }
 
 ol, ul {
@@ -30,4 +43,53 @@ img {
   width: 100%
 }
 
+nav {
+  display: inline-block;
+}
 
+nav li {
+  display: inline-block;
+}
+
+nav li a {
+  display: inline-block;
+  padding: 20px;
+}
+
+.ingredients-list li {
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+}
+
+#directions ol li {
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+}
+
+input#name {
+  display:block;
+}
+
+input#rating {
+  display: block;
+}
+
+input#expertise {
+  display:block;
+}
+
+input[type="radio"] {
+    display: inline-block;
+}
+
+select#expertise {
+    display: block;
+}
+
+input[type="submit"] {
+    display: block;
+    cursor: pointer;
+    outline: none;
+}
