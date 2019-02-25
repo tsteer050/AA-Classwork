@@ -52,22 +52,22 @@ def cats_and_toys_alike
   # Order alphabetically by cat name
   # Get your overall cost lower than: 590
   execute(<<-SQL)
-  EXPLAIN
-  SELECT 
-    cats.name
+  SELECT DISTINCT
+    cats.name, toys.color, cats.color
   FROM
     cats
-  JOIN cattoys 
-    ON cats.id = cattoys.cat_id
-  JOIN toys
-    ON cattoys.toy_id = toys.id
+  JOIN
+    cattoys ON
+    cats.id = cattoys.toy_id
+  JOIN 
+    toys ON
+    toys.id = cattoys.toy_id
   WHERE 
-    cats.color = 'Blue' AND
     toys.color = 'Blue'
+  AND
+    cats.color = 'Blue' 
   ORDER BY
     cats.name ASC
-    
-
   SQL
 end
 
@@ -76,7 +76,21 @@ def toyless_blue_cats
 
   # Get your overall cost lower than: 95
   execute(<<-SQL)
-
+  EXPLAIN
+  SELECT DISTINCT
+    cats.name
+  FROM
+    cats
+  LEFT OUTER JOIN
+    cattoys
+  ON 
+    cats.id = cattoys.cat_id
+  WHERE
+    cattoys.toy_id IS NULL
+  AND
+   cats.color = 'Navy Blue'
+  ORDER BY 
+    cats.name
   SQL
 end
 
@@ -87,6 +101,21 @@ def find_unknown
 
   # Get your overall cost lower than: 406
   execute(<<-SQL)
+  EXPLAIN
+    SELECT
+      toys.name
+    FROM
+      toys
+    JOIN
+      cattoys
+    ON
+      toys.id = cattoys.toy_id
+    JOIN
+      cats
+    ON
+      cats.id = cattoys.cat_id
+    WHERE 
+      cats.breed = 'Unknown'
 
   SQL
 end
@@ -100,6 +129,26 @@ def cats_like_johnson
 
   # Get your overall cost lower than: 100
   execute(<<-SQL)
+  EXPLAIN
+    SELECT
+      name
+    FROM
+      cats
+    WHERE 
+
+      breed IN (
+        SELECT
+          breed
+        FROM
+          cats
+        WHERE 
+          name = 'Johnson'
+        AND
+          color = 'Lavender'
+
+      )
+      ORDER BY 
+        name ASC
 
   SQL
 end
@@ -111,6 +160,25 @@ def cheap_toys_and_their_cats
   # Order alphabetically by cats name
   # Get your overall cost lower than: 230
   execute(<<-SQL)
+  
+  EXPLAIN
+    SELECT 
+      cats.name
+    FROM
+      cats
+    JOIN
+      cattoys
+    ON
+      cats.id = cattoys.cat_id
+    JOIN
+      toys
+    ON
+      cattoys.toy_id = toys.id
+    WHERE
+      price = ( SELECT MIN(price) FROM toys ) 
+    ORDER BY
+      cats.name ASC
+    
   
   SQL
 end
