@@ -4,7 +4,20 @@ class UsersController < ApplicationController
     end
 
     def index
-        render json: User.all
+        if params.has_key?(:query)
+            base = params[:query]
+            pattern = "%#{base}%"
+            users = User.where('username LIKE ?', pattern)
+            render json: users
+        else
+            render json: User.all
+        end
+    end
+
+    def favorites
+        favorites = User.find(params[:id]).favorited_own_artworks
+        favorites << User.find(params[:id]).favorited_shared_artworks
+        render json: favorites
     end
 
     def create

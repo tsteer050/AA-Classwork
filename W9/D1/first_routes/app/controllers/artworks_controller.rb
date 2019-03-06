@@ -6,15 +6,15 @@ class ArtworksController < ApplicationController
     def index
         # /users/:user_id/artworks
         user_id = params[:user_id]
-
-        owned_artwork = Artwork.where(:artist_id => user_id)
-        viewed_artwork = ArtworkShare.where(:viewer_id => user_id).first.artwork
-
-        render json: { 
-            owned_artwork: owned_artwork, 
-            viewed_artwork: viewed_artwork
-            status: :ok
-        }
+        user = User.find(user_id)
+        owned_artwork = user.artworks
+        viewed_artwork = user.shared_artworks
+        
+        artworks = owned_artwork
+        artworks << viewed_artwork
+        
+        render json: artworks
+ 
     end
 
 

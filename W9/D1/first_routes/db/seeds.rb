@@ -9,6 +9,7 @@
 User.destroy_all
 Artwork.destroy_all
 ArtworkShare.destroy_all
+Comment.destroy_all
 
 User.create([{username: 'Vincent van Gogh'}, {username: 'Eyvind Earle'}])
 Artwork.create([
@@ -21,6 +22,8 @@ ArtworkShare.create([
     { viewer_id: User.first.id, artwork_id: Artwork.last.id }
 ])
 
-
+Comment.create([
+    { user_id: User.first.id, artwork_id: Artwork.first.id, body: 'First Comment' }
+])
 
     
