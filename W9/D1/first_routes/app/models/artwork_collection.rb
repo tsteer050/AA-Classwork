@@ -1,3 +1,4 @@
+
 class ArtworkCollection < ApplicationRecord
     validates :user_id, :artwork_id, :collection_id, presence: true
     validates :artwork_id, uniqueness: { scope: :collection_id }
@@ -6,7 +7,15 @@ class ArtworkCollection < ApplicationRecord
     foreign_key: :user_id,
     class_name: 'User'
 
-    has_and_belongs_to_many :artworks,
-    foreign_key: :artwork_id,
-    class_name: 'Artwork'
+    # def artworks
+    #     data = ActiveRecord::Base.connection.execute(<<-SQL, self.collection_id)
+    #         SELECT
+    #             artworks.*
+    #         FROM 
+    #             artworks
+            
+    #     SQL
+    #     data
+
+    # end
 end

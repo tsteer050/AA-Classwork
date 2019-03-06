@@ -26,14 +26,13 @@ class Artwork < ApplicationRecord
     through: :likes,
     source: :user
 
-    has_and_belongs_to_many :collections,
-    foreign_key: :artwork_id,
-    class_name: 'ArtworkCollection'
+    # def collections
+    #     data = DBConnection.execute(<<-SQL)
+    #         SELECT
+    #             *
+    #         FROM
+                
 
-    belongs_to :collections2,
-    primary_key: :artwork_id,
-    foreign_key: :id,
-    class_name: 'ArtworkCollection'
+    #     SQL
+    # end
 end
-
-# has_and_belongs_to_many
