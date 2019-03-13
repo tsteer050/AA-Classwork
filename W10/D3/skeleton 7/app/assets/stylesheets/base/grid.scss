@@ -1,0 +1,66 @@
+
+.content {
+  display: flex;
+}
+
+.col-left {
+  justify-content: left;
+  width: 35%;
+}
+.col-middle {
+  justify-content: center;
+  width: 65%;
+}
+.col-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  width: 75%;
+}
+.text-container-col {
+  display: flex;
+}
+
+.iframe-container {
+  overflow: hidden;
+  padding-top: 56.25%;
+  position: relative;
+}
+ 
+.iframe-container iframe {
+   border: 0;
+   height: 100%;
+   left: 0;
+   position: absolute;
+   top: 0;
+   width: 100%;
+}
+ 
+/* 4x3 Aspect Ratio */
+.iframe-container-4x3 {
+  padding-top: 75%;
+}
+
+/* Attribute selector targeting all elements
+with a class attribute containing 'col-' */
+[class*='col-'] {
+  padding: 20px;
+}
+
+[class*='col-']:last-of-type {
+  // ...
+}
+
+@media all and (max-width: 1000px) {
+  .content {
+    flex-wrap: wrap;
+  }
+  
+
+  .main-left {
+    flex-wrap: wrap;
+  }
+  [class*='col-'] {
+    width: 100%;
+  }
+}

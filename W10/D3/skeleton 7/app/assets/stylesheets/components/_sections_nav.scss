@@ -1,0 +1,46 @@
+
+
+
+
+
+.subjects {
+	display: flex;
+	position: relative;
+	// left: 450px;
+  list-style: none;
+	justify-content: center;
+}
+
+.links {
+  display: flex;
+}
+
+
+.links li {
+  display: flex;
+	text-transform: uppercase;
+	font-family: $sans-serif;
+	font-size: 11px;
+  color: $dark-gray;
+  margin: 5px 5px;
+ 
+}
+
+.links li:last-child:hover {
+	text-decoration: underline;
+	background-color: white;
+}
+
+.links li:hover {
+	background-color :lightgrey;
+}
+
+.linksul {
+	display: flex;
+}
+
+@media all and (max-width: 1000px) {
+	.subjects {
+		display: none;
+	}
+}

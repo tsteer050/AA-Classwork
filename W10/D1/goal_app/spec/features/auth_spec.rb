@@ -23,8 +23,11 @@ feature 'the signup process' do
 end
 
 feature 'logging in' do
-  scenario 'shows username on the homepage after login'
-
+  let!(:user) { create(:user) }
+  scenario 'shows username on the homepage after login' do 
+    user.save!
+    login_as(user)
+  end
 end
 
 feature 'logging out' do
