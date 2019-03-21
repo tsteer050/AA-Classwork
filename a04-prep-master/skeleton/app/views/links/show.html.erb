@@ -1,0 +1,6 @@
+
+<%= @link.title %>
+<%= @link.url %>
+<%= User.find(@link.user_id).username %>
+<a href="<%= links_url %>">Edit Link</a>
+<a href="<%= edit_link_url(@link) %>">Links</a>
